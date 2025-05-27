@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonItem, IonItemSliding, IonList, IonButtons, IonBackButton, IonButton } from '@ionic/angular/standalone';
-import { AlertController, LoadingController } from '@ionic/angular'
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonLabel, IonItemOptions, IonItemOption, IonIcon, IonItem, IonItemSliding, IonList, IonButtons, IonBackButton, IonButton } from '@ionic/angular/standalone'; // Asegúrate de tener todas las necesarias
+import { AlertController, LoadingController } from '@ionic/angular'; // Asegúrate de tener estas
 import { ClientesService } from 'src/app/servicios/clientes.service';
 import { GeneralService } from 'src/app/servicios/general.service';
+import { CommonModule } from '@angular/common'; // Necesario para *ngFor, etc.
+import { FormsModule } from '@angular/forms'; // Si usas ngModel
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.page.html',
   styleUrls: ['./clientes.page.scss'],
   standalone: true,
-  imports: [IonButton, IonBackButton, IonButtons, IonList, IonItemSliding, IonItem, IonIcon, IonItemOption, IonItemOptions, IonLabel,  IonContent, IonTitle, IonHeader, IonToolbar, CommonModule, FormsModule]
+  imports: [IonButton, IonBackButton, IonButtons, IonList, IonItemSliding, IonItem, IonIcon, IonItemOption, IonItemOptions, IonLabel, IonContent, IonTitle, IonHeader, IonToolbar, CommonModule, FormsModule]
 })
 export class ClientesPage implements OnInit {
 
   listaClientes: any[] = [];
-  objetoRespuesta: any = {};
-  objCliente: any = {};
+  // objetoRespuesta: any = {};
+  // objCliente: any = {};
 
   constructor(
     private servC: ClientesService,
@@ -27,41 +27,56 @@ export class ClientesPage implements OnInit {
 
   ngOnInit() {
     this.cargarClientes();
-    console.log(this.servC.get_clientes());
   }
 
   ionViewWillEnter() {
     this.cargarClientes();
   }
-  //modificar para que solo muestre los clientes con estado Activo
   async cargarClientes() {
 
-    let l = await this.loading.create();
-    l.present();
+    // VERIFICACIÓN CRUCIAL:
+    console.log("[clientes.page.ts] Verificando this.servC:", this.servC);
+    if (this.servC) {
+      console.log("Verificando typeof this.servC.get_clientes:", typeof this.servC.get_clientes);
+    } else {
+      console.error("ERROR: this.servC es undefined o null!");
+      this.servG.fun_Mensaje("Error crítico: Servicio de Clientes no inyectado.", "danger");
+      return; // Detener ejecución si el servicio no existe
+    }
 
-    this.servC.get_clientes().subscribe(
-      (respuesta: any) => {
-
-        this.objetoRespuesta = respuesta;
-
-        if (this.objetoRespuesta.cant > 0) {
-          this.listaClientes = this.objetoRespuesta.data.filter( // filtro para mostrar solo los clientes activos cli_estado = 'A'
-            (cliente: any) => cliente.cli_estado === 'A'
-          )
-          console.log(this.listaClientes);
-          l.dismiss();
-        } else {
-          this.servG.fun_Mensaje("No existen datos")
+    if (this.servC && typeof this.servC.get_clientes === 'function') {
+      console.log("Llamando a this.servC.get_clientes()...");
+      this.servC.get_clientes().subscribe({
+        next: (respuesta: any) => {
+          console.log("SUBSCRIBE NEXT: Respuesta recibida:", respuesta);
+          if (respuesta && respuesta.data && respuesta.cant > 0) {
+            this.listaClientes = respuesta.data.filter(
+              (cliente: any) => cliente.cli_estado === 'A'
+            );
+            if (this.listaClientes.length === 0) {
+              this.servG.fun_Mensaje("No hay clientes activos para mostrar.", "warning");
+            }
+          } else {
+            this.listaClientes = [];
+            this.servG.fun_Mensaje("No existen datos de clientes o la respuesta no es válida.", "warning");
+          }
+        },
+        error: (err: Error) => {
+          if (err && err.message) {
+            this.servG.fun_Mensaje(`Error al cargar clientes: ${err.message}`, "danger");
+          } else {
+            this.servG.fun_Mensaje("Error desconocido al cargar clientes.", "danger");
+          }
+        },
+        complete: () => {
+          console.log("SUBSCRIBE COMPLETE");
         }
-
-
-      }, (error: any) => {
-        l.dismiss();
-        this.servG.fun_Mensaje("Error al recuperar los clientes")
-      }
-    )
+      });
+    } else {
+      console.error("ERROR: this.servC.get_clientes no es una función o servC no está definido.");
+      this.servG.fun_Mensaje("Error crítico: Método get_clientes no encontrado.", "danger");
+    }
   }
-
 
   fun_editar(id: number, ionItemSliding: IonItemSliding) {
     ionItemSliding.close();

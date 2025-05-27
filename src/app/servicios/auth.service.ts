@@ -14,22 +14,22 @@ export class AuthService {
 
   login(credentials: { usr_usuario: string; usr_clave: string }): Observable<any> {
     const url = `${this.servG.URLSERV}login`;
-
-    // Configuración de encabezados para asegurar que se envíe como JSON
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-
+    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
     console.log('URL:', url, 'Datos:', credentials);
 
     return this.http.post(url, credentials, httpOptions)
       .pipe(
-        tap(response => console.log('Respuesta del servidor:', response)),
+        tap(response => {
+          console.log('AUTH.SERVICE TAP: Respuesta del servidor:', response);
+          // Intenta lanzar un error aquí para ver si es lo que se propaga
+          // if (response) throw new Error("Error artificial después del tap");
+        }),
         catchError(error => {
-          console.error('Error en la solicitud:', error);
-          return throwError(error);
+          console.error('AUTH.SERVICE CATCHERROR: Error en la solicitud:', error);
+          console.error('AUTH.SERVICE CATCHERROR: Error status:', error.status);
+          console.error('AUTH.SERVICE CATCHERROR: Error message:', error.message);
+          // Re-lanza el error de una manera clara
+          return throwError(() => new Error(error.message || 'Error desconocido en auth.service'));
         })
       );
   }

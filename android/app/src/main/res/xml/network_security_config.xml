@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api-app-7tty.onrender.com</domain>
+        <!-- You might need to add trust-anchors here if it's a self-signed cert or custom CA,
+             but for Render.com, this should not be needed if their cert is fine.
+             If cleartextTrafficPermitted="true" is needed for an HTTPS site, it usually
+             indicates Android perceives the HTTPS as insecure. -->
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" /> <!-- Allows user-installed CAs, for debugging/corporate CAs -->
+        </trust-anchors>
+    </domain-config>
+    <!-- You can add a base-config here if needed for other settings -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>
