@@ -1,0 +1,30 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Catalogo</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="principal"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+      <ion-card *ngFor="let objProducto of listaProductos">
+        <div>
+          <img [src]="servG.imagenUrl(objProducto.prod_imagen)" alt="Imagen del producto" style="width: 100%; height: auto;">
+        </div>
+        <div> 
+          <ion-card-header>
+            <ion-card-title>{{objProducto.prod_nombre}}</ion-card-title>
+            <ion-card-subtitle>Codigo: {{objProducto.prod_codigo}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <p><strong>Precio: </strong> $ {{objProducto.prod_precio}}</p>
+            <p><strong>Stock: </strong> $ {{objProducto.prod_stock}}</p>
+            {{objProducto.prod_descripcion}}
+          </ion-card-content>
+        </div>
+      </ion-card>
+
+  </ion-list>
+</ion-content>

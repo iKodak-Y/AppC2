@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{id==0?'Nuevo ': 'Editar '}}cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item>
+      <ion-label>CEDULA:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_identificacion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>NOMBRE:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_nombre"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>TELEFONO:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_telefono"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>CORREO:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_correo"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>DIRECCION:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_direccion"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>PAIS:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_pais"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>CIUDAD:</ion-label>
+      <ion-input type="text" [(ngModel)]="objCliente.cli_ciudad"></ion-input>
+    </ion-item>
+  </ion-list>
+  
+  <ion-button expand="full" (click)="fun_grabar()">
+    grabar
+  </ion-button>
+</ion-content>

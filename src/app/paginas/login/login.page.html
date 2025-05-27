@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="onLogin()">
+    <ion-item>
+      <ion-input label="Usuario" labelPlacement="floating" [(ngModel)]="credentials.usr_usuario" name="usr_usuario"
+        required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input label="Contraseña" labelPlacement="floating" [(ngModel)]="credentials.usr_clave" name="usr_clave"
+        type="password" required></ion-input>
+    </ion-item>
+    <div class="ion-padding-top">
+      <ion-button expand="block" type="submit">Iniciar Sesión</ion-button>
+    </div>
+  </form>
+
+  <!-- Cuadro que muestra las credenciales de login solo ejemplo -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Credenciales de Login Info</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Usuario: usuario1</p>
+      <p>Contraseña: admin</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

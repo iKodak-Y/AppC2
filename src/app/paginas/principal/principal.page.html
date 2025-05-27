@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar  mode="ios" color="secondary">
+    <ion-title>Tienda </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-grid>
+    <ion-row>
+     <ion-col>
+        <ion-card class="colorboton2" (click)="servG.irA('/clientes')">
+          <ion-card-content>
+            <ion-icon name="body"></ion-icon>
+          </ion-card-content>
+          <ion-card-title>Clientes</ion-card-title>
+        </ion-card>
+      </ion-col>
+      <!-- boton 2 -->
+        <ion-col>
+        <ion-card class="colorboton1" (click)="servG.irA('/productos')">
+          <ion-card-content>
+            <ion-icon name="calculator"></ion-icon>
+          </ion-card-content>
+          <ion-card-title>Productos</ion-card-title>
+        </ion-card>
+      </ion-col>
+      
+    </ion-row>
+    <ion-row>
+       <!-- boton 3 -->
+       <ion-col>
+        <ion-card class="colorboton3" (click)="servG.irA('/catalogo')">
+          <ion-card-content>
+            <ion-icon name="cart"></ion-icon>
+          </ion-card-content>
+          <ion-card-title>Catalogo</ion-card-title>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<footer>
+  <ion-toolbar mode="ios" color="secondary">
+    <ion-title>UPSE</ion-title>
+  </ion-toolbar>
+</footer>
