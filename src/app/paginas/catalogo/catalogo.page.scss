@@ -1,0 +1,24 @@
+.carrito-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 8px;
+}
+
+.contador-pedidos {
+  background: var(--ion-color-primary);
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.total-carrito {
+  font-weight: bold;
+  color: var(--ion-color-dark);
+  font-size: 14px;
+}

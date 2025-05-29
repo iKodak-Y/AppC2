@@ -19,7 +19,10 @@ body,
 calculator,
 trash,
 create,
-add
+add,
+cartSharp,
+bagAddSharp,
+search
 }from 'ionicons/icons';
 import { provideHttpClient } from '@angular/common/http';
 addIcons({
@@ -35,7 +38,10 @@ addIcons({
  'calculator':calculator,
  'trash': trash,
  'create': create,
- 'add': add
+ 'add': add,
+ 'cart-sharp': cartSharp,
+ 'bag-add-sharp':bagAddSharp,
+ 'search': search
 });
 //fin agregar iconos
 

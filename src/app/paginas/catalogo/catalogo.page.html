@@ -1,30 +1,62 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Catalogo</ion-title>
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title>Catálogo</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="principal"></ion-back-button>
+      <ion-back-button text="" defaultHref="principal"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <div class="carrito-info">
+        <span class="contador-pedidos"><b>{{ servG.contadorPedidos }}</b></span>
+        <span class="total-carrito">${{ servG.totalCarrito }}</span>
+      </div>
+      <ion-button (click)="abrirCarrito()">
+        <ion-icon name="cart-sharp" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
-      <ion-card *ngFor="let objProducto of listaProductos">
-        <div>
-          <img [src]="servG.imagenUrl(objProducto.prod_imagen)" alt="Imagen del producto" style="width: 100%; height: auto;">
-        </div>
-        <div> 
-          <ion-card-header>
-            <ion-card-title>{{objProducto.prod_nombre}}</ion-card-title>
-            <ion-card-subtitle>Codigo: {{objProducto.prod_codigo}}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            <p><strong>Precio: </strong> $ {{objProducto.prod_precio}}</p>
-            <p><strong>Stock: </strong> $ {{objProducto.prod_stock}}</p>
-            {{objProducto.prod_descripcion}}
-          </ion-card-content>
-        </div>
-      </ion-card>
+  <div mode="ios" class="navegacion-bar">
+    <div>
+      <ion-searchbar placeholder="Buscar productos" debounce="500" animated="true"></ion-searchbar>
+    </div>
+    <div>
+      <ion-buttons slot="start">
+      </ion-buttons>
+    </div>
+  </div>
+  <ion-grid class="ion-no-padding">
+    <ion-row>
+      <ion-col size="6" *ngFor="let objProducto of listaProductos">
+        <ion-list>
+          <div class="card-container">
+            <ion-card>
+              <div>
+                <img [src]="servG.imagenUrl(objProducto.prod_imagen)" alt="Imagen del producto"
+                  style="width: 100%; height: auto;">
+              </div>
+              <div>
+                <ion-card-header>
+                  <ion-card-title>{{objProducto.prod_nombre}}</ion-card-title>
+                  <ion-card-subtitle>Codigo: {{objProducto.prod_codigo}}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  <p><strong>Precio: </strong> $ {{objProducto.prod_precio}}</p>
+                  <p><strong>Stock: </strong> {{objProducto.prod_stock}}</p>
+                  {{objProducto.prod_descripcion}}
+                </ion-card-content>
+              </div>
+              <div mode="ios" class="ion-margin">
+                <ion-button expand="block" color="primary" (click)="servG.agregarProducto(objProducto)">
+                  <ion-icon name="bag-add-sharp" slot="icon-only"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-card>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  </ion-list>
 </ion-content>

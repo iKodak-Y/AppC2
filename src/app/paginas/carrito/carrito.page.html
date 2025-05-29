@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title>Carrito de Compras</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="catalogo"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item-divider mode="ios" color="primary">
+      <ion-label>Información del Pedido</ion-label>
+    </ion-item-divider>
+
+    <!-- Fecha -->
+    <ion-item>
+      <ion-label position="stacked">Fecha de Emisión: </ion-label>
+      <ion-row class="ion-align-items-center">
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime presentation="date" id="datetime" [(ngModel)]="fechaPedido"></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </ion-row>
+    </ion-item>
+
+    <!-- Cliente -->
+    <ion-item>
+      <ion-label position="stacked">Identificación del Cliente*</ion-label>
+      <ion-input type="text" [(ngModel)]="cli_identificacion" (ionChange)="onInputChange($event)"
+        placeholder="Ingrese la identificación">
+        <ion-button slot="end" fill="clear" (click)="buscarCliente(cli_identificacion)">
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+      </ion-input>
+    </ion-item>
+
+    <!-- Información del cliente encontrado -->
+    <ion-item *ngIf="cliente">
+      <ion-label>
+        <h2>{{cliente.cli_nombre}}</h2>
+        <p>Teléfono: {{cliente.cli_telefono}}</p>
+        <p>Dirección: {{cliente.cli_direccion}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Detalle del Pedido -->
+  <ion-list>
+    <ion-item-divider mode="ios" color="primary">
+      <ion-label>Detalle del Pedido</ion-label>
+    </ion-item-divider>
+
+    <!-- Productos en el carrito -->
+    <ion-item *ngFor="let producto of pedidos" class="producto-item">
+      <ion-label>
+        <h2>{{producto.prod_nombre}}</h2>
+        <p>Código: {{producto.prod_codigo}}</p>
+        <p>Precio unitario: ${{producto.prod_precio}}</p>
+        <p>Stock disponible: {{producto.prod_stock}}</p>
+      </ion-label>
+      <div slot="end" class="ion-text-end">
+        <div class="cantidad-container">
+          <ion-label position="stacked" class="cantidad-label">Cantidad</ion-label>
+          <ion-input type="number" [value]="cantidades[producto.prod_id]"
+            (ionChange)="actualizarCantidad(producto, $event)" class="cantidad-input" min="1"
+            [max]="producto.prod_stock">
+          </ion-input>
+        </div>
+        <div class="subtotal-container">
+          <ion-text color="medium">Subtotal:</ion-text>
+          <ion-text color="dark" class="subtotal-valor">${{calcularSubtotal(producto).toFixed(2)}}</ion-text>
+        </div>
+        <ion-button fill="clear" color="danger" (click)="eliminarProducto(producto)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-item>
+
+    <!-- Total -->
+    <ion-item>
+      <ion-label>
+        <h2 class="total-label">Total del Pedido</h2>
+      </ion-label>
+      <ion-text slot="end" color="primary">
+        <h2>${{totalCarrito.toFixed(2)}}</h2>
+      </ion-text>
+    </ion-item>
+  </ion-list>
+
+  <!-- Botón de Confirmar -->
+  <div class="ion-padding">
+    <ion-button expand="block" (click)="confirmarPedido()" [disabled]="!cliente || pedidos.length === 0">
+      Confirmar Pedido
+    </ion-button>
+  </div>
+</ion-content>

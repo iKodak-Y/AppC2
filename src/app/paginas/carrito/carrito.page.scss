@@ -1,0 +1,66 @@
+.producto-item {
+  margin: 8px 0;
+}
+
+.cantidad-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.cantidad-label {
+  font-size: 18px;
+  color: var(--ion-color-medium);
+  margin-bottom: 9px;
+}
+
+.cantidad-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid var(--ion-color-medium);
+  border-radius: 4px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+.subtotal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 8px 0;
+}
+
+.subtotal-valor {
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.total-label {
+  font-weight: bold;
+  color: var(--ion-color-dark);
+}
+
+ion-item-divider {
+  --background: var(--ion-color-primary);
+  --color: white;
+  margin-top: 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+ion-button[expand="block"] {
+  margin: 16px 0;
+  --border-radius: 8px;
+}
+
+.ion-padding {
+  padding: 16px;
+}
+
+ion-datetime-button::part(native) {
+  background-color: var(--ion-color-light);
+  border-radius: 8px;
+  padding: 8px;
+}
